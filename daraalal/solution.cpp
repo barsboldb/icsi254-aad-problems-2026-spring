@@ -27,35 +27,10 @@ int main() {
     for (int i = 0; i < N; i++) cin >> A[i];
     for (int i = 0; i < N; i++) cin >> B[i];
 
-    int M = N - K;                 // how many elements must remain (not "fixed")
-    if (M <= 0) {                  // we can change all elements -> 0
-        cout << 0 << "\n";
-        return 0;
-    }
+  
+    //Todo 
 
-    vector<long long> C(N);
-    for (int i = 0; i < N; i++) C[i] = A[i] - B[i];
-    sort(C.begin(), C.end());
-
-    // prefix sums: ps[i] = sum(C[0..i-1])
-    vector<long long> ps(N + 1, 0);
-    for (int i = 0; i < N; i++) ps[i + 1] = ps[i] + C[i];
-
-    auto window_cost = [&](int l) -> long long {
-        int r = l + M - 1;
-        int m = (l + r) / 2;      // median index
-        long long p = C[m];
-
-        long long left  = p * (m - l) - (ps[m] - ps[l]);
-        long long right = (ps[r + 1] - ps[m + 1]) - p * (r - m);
-        return left + right;
-    };
-
-    long long ans = LLONG_MAX;
-    for (int l = 0; l + M - 1 < N; l++) {
-        ans = min(ans, window_cost(l));
-    }
-
+  
     cout << ans << "\n";
     return 0;
 }
