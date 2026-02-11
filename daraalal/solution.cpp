@@ -2,18 +2,26 @@
 using namespace std;
 
 /*
-  Given A, B length N.
-  Choose integer X, add to all A: A[i] += X
-  Then you may change at most K elements of A to any values (optimal: set them to B[i]) -> diff becomes 0.
+  ICSI254 - AAD Problems (2026 Spring)
+  Problem: daraalal
 
-  Let C[i] = A[i] - B[i]
-  After adding X: |C[i] + X|
-  Changing up to K elements means we can remove up to K largest absolute diffs.
-  So for a fixed X, cost = sum of (N-K) smallest values of |C[i] + X|.
+  What you must do:
+  - Read input from STDIN
+  - Print the answer to STDOUT
+  - Do NOT print extra debug text
 
-  Let p = -X. We want min over p of sum of (N-K) smallest |C[i] - p|.
-  After sorting C, the best (N-K) elements form a contiguous window; optimal p for a window is its median.
-  Evaluate all windows of length M = N-K.
+  Input format:
+  N K
+  A1 A2 ... AN
+  B1 B2 ... BN
+
+  Output:
+  - One integer: the minimum possible value
+
+  Notes:
+  - This repository uses GitHub Actions to auto-test your code.
+  - Tests are in: daraalal/test/*.in and *.out
+  - Local test: python daraalal/run_test.py
 */
 
 int main() {
@@ -27,35 +35,11 @@ int main() {
     for (int i = 0; i < N; i++) cin >> A[i];
     for (int i = 0; i < N; i++) cin >> B[i];
 
-    int M = N - K;                 // how many elements must remain (not "fixed")
-    if (M <= 0) {                  // we can change all elements -> 0
-        cout << 0 << "\n";
-        return 0;
-    }
+    // TODO: Implement your solution here.
+    // Example output (WRONG): 
+    // cout << 0 << "\n";
 
-    vector<long long> C(N);
-    for (int i = 0; i < N; i++) C[i] = A[i] - B[i];
-    sort(C.begin(), C.end());
-
-    // prefix sums: ps[i] = sum(C[0..i-1])
-    vector<long long> ps(N + 1, 0);
-    for (int i = 0; i < N; i++) ps[i + 1] = ps[i] + C[i];
-
-    auto window_cost = [&](int l) -> long long {
-        int r = l + M - 1;
-        int m = (l + r) / 2;      // median index
-        long long p = C[m];
-
-        long long left  = p * (m - l) - (ps[m] - ps[l]);
-        long long right = (ps[r + 1] - ps[m + 1]) - p * (r - m);
-        return left + right;
-    };
-
-    long long ans = LLONG_MAX;
-    for (int l = 0; l + M - 1 < N; l++) {
-        ans = min(ans, window_cost(l));
-    }
-
-    cout << ans << "\n";
+    // Remove the line below after implementing.
+    cout << 0 << "\n";
     return 0;
 }
