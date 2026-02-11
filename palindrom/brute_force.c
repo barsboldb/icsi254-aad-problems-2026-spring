@@ -1,5 +1,6 @@
 #include "brute_force.h"
 #include <string.h>
+#include <stdlib.h>
 
 #define MOD 998244353
 
@@ -41,15 +42,14 @@ void generate(int pos, int len, int k, char *buffer, long long *ans) {
     }
 }
 
-long long countDoublePalindromes(int n, int k) {
-
-    long long ans = 0;
-    char buffer[20];  
-    // brute force тул n <= 19
-
+long long countDoublePalindromes_bruteforce(int n, int k) {
+    long long total_ans = 0;
+    char *buffer = malloc(n + 1);
     for (int len = 1; len <= n; len++) {
-        generate(0, len, k, buffer, &ans);
+        long long current_len_ans = 0;
+        generate(0, len, k, buffer, &current_len_ans);
+        total_ans = (total_ans + current_len_ans) % MOD;
     }
-
-    return ans % MOD;
+    free(buffer);
+    return total_ans;
 }
