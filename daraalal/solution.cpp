@@ -27,8 +27,8 @@ int main() {
     for (int i = 0; i < N; i++) cin >> A[i];
     for (int i = 0; i < N; i++) cin >> B[i];
 
-    int M = N - K;                 // how many elements must remain (not "fixed")
-    if (M <= 0) {                  // we can change all elements -> 0
+    int M = N - K;              
+    if (M <= 0) {                 
         cout << 0 << "\n";
         return 0;
     }
