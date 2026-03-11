@@ -40,3 +40,80 @@ void gr_read(Graph *g, int n, int m, int isDirected, int hasWeight){
 		}
 	}
 }
+
+
+void gr_bfs(Graph *g, int s, int pi[], int distance[])
+{
+	int color[g->n+1];
+	for (int i = 1; i <= g->n; i++) {
+		color[i]=WHITE;
+		pi[i]=-1;
+		distance[i] = INT_MAX;
+	}
+	Queue *queue = (Queue *)malloc(sizeof(Queue));
+	queue->head = queue->tail = NULL;
+	queue->len = 0;
+	q_push(queue, s);
+	color[s]=GRAY;
+	distance[s] = 0;
+	while (queue->len>0)
+	{
+		int u = queue->head->x;
+		q_pop(queue);
+		Elm *i;
+		for (i = g->adj[u].head; i != NULL; i = i->next) {
+			if (color[i->x]==WHITE)
+			{
+				q_push(queue, i->x);
+				color[i->x]=GRAY;
+				pi[i->x]=u;
+				distance[i->x]=distance[u] + 1;
+			}
+		}
+		color[u] = BLACK;
+	}
+	free(queue);
+}
+
+void gr_print_path(Graph *g, int s, int v, int pi[]){
+	if(s == v){
+		printf("%d ", s);
+	} else if(pi[v] == -1){
+		printf("no path from %d to %d exists", s, v);
+	} else{
+		gr_print_path(g, s, pi[v], pi);
+		printf("%d ", v);
+	}
+	printf("\n");
+}
+
+void gr_dfs(Graph *g, int distance[], int finish[], int pi[]){
+	int color[g->n+1];
+	for (int i = 1; i < g->n+1; i++)
+	{
+		color[i] = WHITE;
+		pi[i] = -1;
+	}
+	int time = 0;
+	for (int i = 1; i < g->n+1; i++)
+	{
+		if(color[i] == WHITE) gr_dfs_visit(g, i, color, distance, finish, pi, &time);
+	}
+}
+
+void gr_dfs_visit(Graph *g, int x, int color[], int distance[], int finish[], int pi[], int *time){
+	(*time)++;
+	distance[x] = *time;
+	color[x] = GRAY;
+	Elm *curr = g->adj[x].head;
+    while (curr) {
+        if (color[curr->x] == WHITE){
+			pi[curr->x] = x;
+			gr_dfs_visit(g, curr->x, color, distance, finish, pi, time);
+		}
+        curr = curr->next;
+    }
+	color[x] = BLACK;
+	(*time)++;
+	finish[x] = *time;
+}

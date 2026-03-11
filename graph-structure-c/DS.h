@@ -3,6 +3,9 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#define WHITE 0
+#define GRAY 1
+#define BLACK 2
 
 struct Elm {
         int x;
@@ -26,6 +29,27 @@ void l_pop_back(List *);
 void l_erase(List *, int);
 void l_print(List *);
 Elm *l_search(List *, int);
+
+struct Stack {
+        Elm *top;
+        int len;
+};
+typedef struct Stack Stack;
+
+void s_push(Stack *, int );
+void s_pop(Stack *);
+void s_print(Stack *);
+
+struct Queue {
+        Elm *head;
+        Elm *tail;
+        int len;
+};
+typedef struct Queue Queue;
+
+void q_push(Queue *, int);
+void q_pop(Queue *);
+void q_print(Queue *);
 
 struct Graph {
 	int n;     // Оройн тоо
