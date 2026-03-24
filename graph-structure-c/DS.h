@@ -3,6 +3,10 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <limits.h>
+#define WHITE 0
+#define GRAY 1
+#define BLACK 2
 
 struct Elm {
         int x;
@@ -27,6 +31,27 @@ void l_erase(List *, int);
 void l_print(List *);
 Elm *l_search(List *, int);
 
+struct Stack {
+        Elm *top;
+        int len;
+};
+typedef struct Stack Stack;
+
+void s_push(Stack *, int );
+void s_pop(Stack *);
+void s_print(Stack *);
+
+struct Queue {
+        Elm *head;
+        Elm *tail;
+        int len;
+};
+typedef struct Queue Queue;
+
+void q_push(Queue *, int);
+void q_pop(Queue *);
+void q_print(Queue *);
+
 struct Graph {
 	int n;     // Оройн тоо
 	int m;     // Ирмэгүүдийн тоо
@@ -38,5 +63,9 @@ void gr_init_graph(Graph *, int);
 void gr_add_edge(Graph *, int, int, float);
 void gr_add_edge_undirected(Graph *, int, int, float);
 void gr_read(Graph *, int, int, int, int);
+void gr_bfs(Graph *, int, int[], int[]);
+void gr_print_path(Graph *, int, int, int[]);
+void gr_dfs(Graph *, int[], int[], int[]);
+void gr_dfs_visit(Graph *, int, int[], int[], int[], int[], int *);
 
 #endif
